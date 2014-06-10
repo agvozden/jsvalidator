@@ -16,4 +16,3 @@ $().ready(function() {
 		return checkForm($(this));
 	});
 });
-
