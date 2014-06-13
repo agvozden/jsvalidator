@@ -1,7 +1,7 @@
 /**
  * js auto validation
  * Copyright info-g 
- * author: agvozden
+ * @author: agvozden
  * www.gvozden.info
  */
 
