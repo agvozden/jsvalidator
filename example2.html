@@ -1,0 +1,44 @@
+<htmL>
+<head>
+<style>
+.error{color:#f00}
+.error_message{color:#f00;font-weight:bold;display:none}
+</style>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="checkform.js"></script>
+</head>
+<body>
+   <div>
+      <h3>example:</h3>
+      <form method="post">
+        <p>
+          <label for="name">Name*</label><br/>
+          <input type="text" name="name" id="name" required="required" title="input name" placeholder="name" />
+        <p>
+          <label for="phone">Phone:*</label><br/>
+          <input type="tel" name="phone" id="phone" required="required" maxlength="15"  title="input phone" placeholder="phone" pattern="[0-9-+ /]*" />
+        <p>
+          <label for="age">Age:*</label><br/>
+          <input type="number" name="age" id="age" required="required" minvalue="1" maxlength="3"  title="input age" placeholder="age" pattern="[0-9]*" />
+        <p>
+          <label for="email">e-mail:*</label><br/>
+          <input type="email" name="email" id="email" required="required"  title="input email" placeholder="email" />
+        <p>
+        <textarea name="message" id="message" class="maxlength" maxlength="500" required="required" title="input text" placeholder="text"></textarea>
+        <p>
+        <input type="checkbox" name="tos_accept" id="tos_accept" required="required" title="accept tos" /> 
+        <a class="classic" href="#tos" target="tos">Accept </a>
+        <p class="error_message">Please, fill all fields</p>
+        <p>
+        <input type="submit" />
+      </form>
+  </div>
+<script>
+$().ready(function() {
+	$("form").submit(function() {
+		return checkForm($(this));
+	});
+});
+</script>
+</body>
+</html>
