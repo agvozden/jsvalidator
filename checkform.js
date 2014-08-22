@@ -4,7 +4,6 @@
  * @author: agvozden
  * www.gvozden.info
  */
-
 var checkForm = function(forma){
 	var status = true;
 	$(".error", forma).remove();
@@ -25,7 +24,7 @@ var checkForm = function(forma){
 			status = false;
 			if (addClass) elem.addClass("require");
 			if (addSpan){
-				title = (elem.attr('title')) ? elem.attr('title') : "";
+				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 				elem.after('<span class="error">'+title+'</span>');
 			}
 		} else {
@@ -35,7 +34,7 @@ var checkForm = function(forma){
 					status = false;
 					if (addClass) elem.addClass("require");
 					if (addSpan){
-						title = (elem.attr('title')) ? elem.attr('title') : "";
+						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="error">'+title+'</span>');
 					}
 				}
@@ -46,7 +45,7 @@ var checkForm = function(forma){
 					status = false;
 					if (addClass) elem.addClass("require");
 					if (addSpan){
-						title = (elem.attr('title')) ? elem.attr('title') : "";
+						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="error">'+title+'</span>');
 					}
 				}
@@ -57,7 +56,7 @@ var checkForm = function(forma){
 					status = false;
 					if (addClass) elem.addClass("require");
 					if (addSpan){
-						title = (elem.attr('title')) ? elem.attr('title') : "";
+						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="error">'+title+'</span>');
 					}
 				}
@@ -68,7 +67,7 @@ var checkForm = function(forma){
 				status = false;
 				if (addClass) elem.addClass("require");
 				if (addSpan){
-					title = (elem.attr('title')) ? elem.attr('title') : "";
+					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					elem.after('<span class="error"> min! '+title+'</span>');
 				}
 			}
@@ -77,7 +76,7 @@ var checkForm = function(forma){
 				status = false;
 				if (addClass) elem.addClass("require");
 				if (addSpan){
-					title = (elem.attr('title')) ? elem.attr('title') : "";
+					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					elem.after('<span class="error">max! '+title+'</span>');
 				}
 			}
