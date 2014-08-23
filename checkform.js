@@ -9,9 +9,10 @@ var checkForm = function(forma){
 	$(".error", forma).remove();
 	$(".require", forma).removeClass('require');
 	$(".error_message", forma).hide();
+	var dump = true;
 	var addClass = true;
-	var addSpan = true;
-	
+	var addSpan = false;
+		
 	var req_ptrn = ".required:enabled, *[required='required']";
 	$(req_ptrn, forma).each(function(){
 		var elem = $(this);
@@ -22,6 +23,7 @@ var checkForm = function(forma){
 		if (elem.attr('type')=='checkbox' && !elem.is(':checked')) value = '';
 		if (value.length<minlength || value==0) {
 			status = false;
+			if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 			if (addClass) elem.addClass("require");
 			if (addSpan){
 				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
@@ -32,6 +34,7 @@ var checkForm = function(forma){
 				var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 				if (!filter.test(value)) {
 					status = false;
+					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass) elem.addClass("require");
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
@@ -43,6 +46,7 @@ var checkForm = function(forma){
 				var numericExpression = /^[0-9]+$/;
 				if(!value.match(numericExpression)){
 					status = false;
+					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass) elem.addClass("require");
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
@@ -54,6 +58,7 @@ var checkForm = function(forma){
 				var filter = /^[0-9-+\/\ ]+$/;
 				if (!filter.test(value)) {
 					status = false;
+					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass) elem.addClass("require");
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
@@ -65,6 +70,7 @@ var checkForm = function(forma){
 			var minvalue = elem.attr('minvalue');
 			if (minvalue && (parseInt(value) < parseInt(minvalue)) ){
 				status = false;
+				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 				if (addClass) elem.addClass("require");
 				if (addSpan){
 					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
@@ -74,6 +80,7 @@ var checkForm = function(forma){
 			var maxvalue = elem.attr('maxvalue');
 			if (maxvalue && (parseInt(value) > parseInt(maxvalue)) ){
 				status = false;
+				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 				if (addClass) elem.addClass("require");
 				if (addSpan){
 					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
@@ -87,8 +94,12 @@ var checkForm = function(forma){
 				var test = elemt.val();
 				if (test!=value) {
 					status = false;
-					if (addClass) elemt.addClass("require");
-					title = (elemt.attr('title')) ? elemt.attr('title') : "";
+					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
+					if (addClass){
+						elemt.addClass("require");
+						elem.addClass("require");
+					}
+					title = (elemt.data('errmsg')) ? elemt.data('errmsg') : "";
 					elemt.after('<span class="error">'+title+'</span>');					
 				}
 			}
@@ -96,6 +107,8 @@ var checkForm = function(forma){
 			// external plugin error (email exists check)
 			if (elem.data('checkerror')){
 				status = false;
+				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
+				if (addClass) elem.addClass("require");
 				if (addSpan){
 					title = elem.data('check_error');
 					elem.after('<span class="error">'+title+'</span>');
