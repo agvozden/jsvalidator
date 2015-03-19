@@ -6,12 +6,14 @@
  */
 var checkForm = function(forma){
 	var status = true;
-	$(".error", forma).remove();
-	$(".require", forma).removeClass('require');
-	$(".error_message", forma).hide();
 	var dump = true;
 	var addClass = true;
+	var errorClass = 'require'; // has-error / require
 	var addSpan = false;
+
+	$(".error", forma).remove();
+	$("."+errorClass, forma).removeClass(errorClass);
+	$(".error_message", forma).hide();
 		
 	var req_ptrn = ".required:enabled, *[required='required']";
 	$(req_ptrn, forma).each(function(){
@@ -24,7 +26,7 @@ var checkForm = function(forma){
 		if (value.length<minlength || value==0) {
 			status = false;
 			if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-			if (addClass) elem.addClass("require");
+			if (addClass) elem.addClass(errorClass);
 			if (addSpan){
 				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 				elem.after('<span class="error">'+title+'</span>');
@@ -35,7 +37,7 @@ var checkForm = function(forma){
 				if (!filter.test(value)) {
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-					if (addClass) elem.addClass("require");
+					if (addClass) elem.addClass(errorClass);
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="error">'+title+'</span>');
@@ -47,7 +49,7 @@ var checkForm = function(forma){
 				if(!value.match(numericExpression)){
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-					if (addClass) elem.addClass("require");
+					if (addClass) elem.addClass(errorClass);
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="error">'+title+'</span>');
@@ -59,7 +61,7 @@ var checkForm = function(forma){
 				if (!filter.test(value)) {
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-					if (addClass) elem.addClass("require");
+					if (addClass) elem.addClass(errorClass);
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="error">'+title+'</span>');
@@ -71,7 +73,7 @@ var checkForm = function(forma){
 			if (minvalue && (parseInt(value) < parseInt(minvalue)) ){
 				status = false;
 				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-				if (addClass) elem.addClass("require");
+				if (addClass) elem.addClass(errorClass);
 				if (addSpan){
 					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					elem.after('<span class="error"> min! '+title+'</span>');
@@ -81,7 +83,7 @@ var checkForm = function(forma){
 			if (maxvalue && (parseInt(value) > parseInt(maxvalue)) ){
 				status = false;
 				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-				if (addClass) elem.addClass("require");
+				if (addClass) elem.addClass(errorClass);
 				if (addSpan){
 					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					elem.after('<span class="error">max! '+title+'</span>');
@@ -96,19 +98,19 @@ var checkForm = function(forma){
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass){
-						elemt.addClass("require");
-						elem.addClass("require");
+						elemt.addClass(errorClass);
+						elem.addClass(errorClass);
 					}
 					title = (elemt.data('errmsg')) ? elemt.data('errmsg') : "";
 					elemt.after('<span class="error">'+title+'</span>');					
 				}
 			}
 
-			// external plugin error (email exists check)
+			// external plug-in error (email exists check)
 			if (elem.data('checkerror')){
 				status = false;
 				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
-				if (addClass) elem.addClass("require");
+				if (addClass) elem.addClass(errorClass);
 				if (addSpan){
 					title = elem.data('check_error');
 					elem.after('<span class="error">'+title+'</span>');
@@ -120,3 +122,15 @@ var checkForm = function(forma){
 	if (!status) $(".error_message", forma).show();
 	return status;
 };
+
+$(function(){
+    var requiredCheckboxes = $(':checkbox[required]');
+    requiredCheckboxes.change(function(){
+        if(requiredCheckboxes.is(':checked')) {
+        	requiredCheckboxes.removeAttr('required');
+        }
+        else {
+            requiredCheckboxes.attr('required', 'required');
+        }
+    });
+});
