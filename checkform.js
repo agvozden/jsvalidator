@@ -9,10 +9,11 @@ var checkForm = function(forma){
 	var dump = true;
 	var addClass = true;
 	var errorClass = 'require'; // has-error / require
-	var addSpan = false;
+	var addSpan = true;
+	var spannClass = 'error'
 
-	$(".error", forma).remove();
 	$("."+errorClass, forma).removeClass(errorClass);
+	$("."+spannClass, forma).remove();
 	$(".error_message", forma).hide();
 		
 	var req_ptrn = ".required:enabled, *[required='required']";
@@ -29,7 +30,7 @@ var checkForm = function(forma){
 			if (addClass) elem.addClass(errorClass);
 			if (addSpan){
 				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
-				elem.after('<span class="error">'+title+'</span>');
+				elem.after('<span class="'+spannClass+'">'+title+'</span>');
 			}
 		} else {
 			if (elem.attr('type')=='email'){
@@ -40,7 +41,7 @@ var checkForm = function(forma){
 					if (addClass) elem.addClass(errorClass);
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
-						elem.after('<span class="error">'+title+'</span>');
+						elem.after('<span class="'+spannClass+'">'+title+'</span>');
 					}
 				}
 			} else			
@@ -52,7 +53,7 @@ var checkForm = function(forma){
 					if (addClass) elem.addClass(errorClass);
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
-						elem.after('<span class="error">'+title+'</span>');
+						elem.after('<span class="'+spannClass+'">'+title+'</span>');
 					}
 				}
 			} else
@@ -64,7 +65,7 @@ var checkForm = function(forma){
 					if (addClass) elem.addClass(errorClass);
 					if (addSpan){
 						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
-						elem.after('<span class="error">'+title+'</span>');
+						elem.after('<span class="'+spannClass+'">'+title+'</span>');
 					}
 				}
 			}
@@ -76,7 +77,7 @@ var checkForm = function(forma){
 				if (addClass) elem.addClass(errorClass);
 				if (addSpan){
 					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
-					elem.after('<span class="error"> min! '+title+'</span>');
+					elem.after('<span class="'+spannClass+'"> min! '+title+'</span>');
 				}
 			}
 			var maxvalue = elem.attr('maxvalue');
@@ -86,7 +87,7 @@ var checkForm = function(forma){
 				if (addClass) elem.addClass(errorClass);
 				if (addSpan){
 					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
-					elem.after('<span class="error">max! '+title+'</span>');
+					elem.after('<span class="'+spannClass+'">max! '+title+'</span>');
 				}
 			}
 			
@@ -102,7 +103,7 @@ var checkForm = function(forma){
 						elem.addClass(errorClass);
 					}
 					title = (elemt.data('errmsg')) ? elemt.data('errmsg') : "";
-					elemt.after('<span class="error">'+title+'</span>');					
+					elemt.after('<span class="'+spannClass+'">'+title+'</span>');					
 				}
 			}
 
@@ -113,7 +114,7 @@ var checkForm = function(forma){
 				if (addClass) elem.addClass(errorClass);
 				if (addSpan){
 					title = elem.data('check_error');
-					elem.after('<span class="error">'+title+'</span>');
+					elem.after('<span class="'+spannClass+'">'+title+'</span>');
 				}				
 			}
 				
