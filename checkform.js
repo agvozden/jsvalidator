@@ -10,7 +10,7 @@ var checkForm = function(forma){
 	var addClass = true;
 	var errorClass = 'require'; // has-error / require
 	var addSpan = true;
-	var spannClass = 'error'
+	var spannClass = 'error';
 
 	$("."+errorClass, forma).removeClass(errorClass);
 	$("."+spannClass, forma).remove();
@@ -24,6 +24,8 @@ var checkForm = function(forma){
 		var value = elem.val();
 
 		if (elem.attr('type')=='checkbox' && !elem.is(':checked')) value = '';
+		
+		if (value===null) value = 0;
 		if (value.length<minlength || value==0) {
 			status = false;
 			if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
