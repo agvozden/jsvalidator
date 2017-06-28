@@ -11,6 +11,8 @@ var checkForm = function(forma){
 	var errorClass = 'require'; // has-error / require
 	var addSpan = true;
 	var spannClass = 'error';
+	var errmsg = '';
+	var errmsgelem = '#errmsg';
 
 	$("."+errorClass, forma).removeClass(errorClass);
 	$("."+spannClass, forma).remove();
@@ -30,10 +32,11 @@ var checkForm = function(forma){
 			status = false;
 			if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 			if (addClass) elem.addClass(errorClass);
+			title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 			if (addSpan){
-				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 				elem.after('<span class="'+spannClass+'">'+title+'</span>');
 			}
+			if (title) errmsg += title + "\n"; 
 		} else {
 			if (elem.attr('type')=='email'){
 				var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -41,10 +44,11 @@ var checkForm = function(forma){
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass) elem.addClass(errorClass);
+					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					if (addSpan){
-						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="'+spannClass+'">'+title+'</span>');
 					}
+					if (title) errmsg += title + "\n"; 
 				}
 			} else			
 			if (elem.attr('type')=='number'){
@@ -53,10 +57,11 @@ var checkForm = function(forma){
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass) elem.addClass(errorClass);
+					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					if (addSpan){
-						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="'+spannClass+'">'+title+'</span>');
 					}
+					if (title) errmsg += title + "\n"; 
 				}
 			} else
 			if (elem.attr('type')=='tel'){
@@ -65,10 +70,11 @@ var checkForm = function(forma){
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 					if (addClass) elem.addClass(errorClass);
+					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					if (addSpan){
-						title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 						elem.after('<span class="'+spannClass+'">'+title+'</span>');
 					}
+					if (title) errmsg += title + "\n"; 
 				}
 			}
 			
@@ -77,20 +83,22 @@ var checkForm = function(forma){
 				status = false;
 				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 				if (addClass) elem.addClass(errorClass);
+				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 				if (addSpan){
-					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					elem.after('<span class="'+spannClass+'"> min! '+title+'</span>');
 				}
+				if (title) errmsg += title + "\n"; 
 			}
 			var maxvalue = elem.attr('maxvalue');
 			if (maxvalue && (parseInt(value) > parseInt(maxvalue)) ){
 				status = false;
 				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 				if (addClass) elem.addClass(errorClass);
+				title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 				if (addSpan){
-					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					elem.after('<span class="'+spannClass+'">max! '+title+'</span>');
 				}
+				if (title) errmsg += title + "\n"; 
 			}
 			
 			// check 2 way input field (password confirm, email confirm)
@@ -100,12 +108,13 @@ var checkForm = function(forma){
 				if (test!=value) {
 					status = false;
 					if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
+					title = (elem.data('errmsg')) ? elem.data('errmsg') : "";
 					if (addClass){
 						elemt.addClass(errorClass);
 						elem.addClass(errorClass);
+						elem.after('<span class="'+spannClass+'">'+title+'</span>');					
 					}
-					title = (elemt.data('errmsg')) ? elemt.data('errmsg') : "";
-					elemt.after('<span class="'+spannClass+'">'+title+'</span>');					
+					if (title) errmsg += title + "\n"; 
 				}
 			}
 
@@ -114,15 +123,19 @@ var checkForm = function(forma){
 				status = false;
 				if (dump) console.log(elem.attr("name") ? elem.attr("name") : elem.attr("id"));
 				if (addClass) elem.addClass(errorClass);
+				title = elem.data('check_error');
 				if (addSpan){
-					title = elem.data('check_error');
 					elem.after('<span class="'+spannClass+'">'+title+'</span>');
 				}				
+				if (title) errmsg += title + "\n"; 
 			}
 				
 		}
 	});
-	if (!status) $(".error_message", forma).show();
+	if (!status) {
+		$(".error_message", forma).show();
+		if (errmsgelem) $(errmsgelem, forma).html(errmsg.replace(/\n/g,"<br>"));
+	}
 	return status;
 };
 
